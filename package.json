@@ -1,0 +1,23 @@
+{
+  "name": "stretch-project-bar-chart",
+  "version": "1.0.0",
+  "description": "Library that allow other developers to generate bar charts on their web pages using HTML, CSS and JavaScript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jomicm/barChart.git"
+  },
+  "author": "JMCM",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jomicm/barChart/issues"
+  },
+  "homepage": "https://github.com/jomicm/barChart#readme",
+  "devDependencies": {
+    "eslint": "^6.3.0",
+    "eslint-config-google": "^0.14.0"
+  }
+}
