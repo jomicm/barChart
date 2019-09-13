@@ -21,68 +21,44 @@
       //CSS: 45,
       "React": [{ val: 70, color: 'purple' }, { val: 25, color: 'green' }, { val: 20, color: 'orange' }],
       'C#': [{ val: 62, color: 'blue' }],
-      'MONGO': [{ val: 74, color: 'gray'}],
+      'MONGO': [{ val: 74, color: 'gray' }],
       'FIREBASE': [{ val: 33, color: 'orange' }, { val: 15, color: 'black' }],
-      'SQL': [{ val:120, color:'green '}],
+      'SQL': [{ val: 120, color: 'green ' }],
     };
     const config = {
-        title: 'The most awesome technologies',
-        titleColor: 'purple',
-        titleFontSize: '25pt',
-        width: '100%',
-        height: '80px',
-        barColor: 'purple',
-        barSpacing: '50',
-        labelColor: 'white',
-        labelPosition: 'centre',
-      };
+      title: 'The most awesome technologies',
+      titleColor: 'purple',
+      titleFontSize: '25pt',
+      width: '100%',
+      height: '80px',
+      barColor: 'purple',
+      barSpacing: '50',
+      labelColor: 'white',
+      labelPosition: 'centre',
+    };
     $(function () {
       drawBarChart(test, config, '#container');
     });
 
     function drawBarChart(data, options, element) {
+      // Create main html layout
       setMainLayout(element, options.title);
-      let max = getMaxValue(data);
-      let yValues = [...Array(Object.keys(data).length).fill(0)];
-      yValues = yValues.map((x, ix) => (100 / yValues.length * (yValues.length - ix)).toFixed(0))
-      $('.chart').css({ 'grid-template-columns': 'repeat(' + Object.keys(data).length + ', 1fr)' });
-      $('.labels').css({ 'grid-template-columns': 'repeat(' + Object.keys(data).length + ', 1fr)' });
-      for (let i = 0; i < Object.keys(data).length; i++) {
-        let key = Object.keys(data)[i];
-        $('.yAxis').append('<div class="yAx y">' + yValues[i] + '%</div>');
-        $('.chart').append('<div class="row row' + (i + 1) + '"></div>');
-        $('.chart').append('<div class="col col' + (i + 1) + '"></div>');
-        $('.labels').append('<div class="label l' + (i + 1) + '">' + key + '</div>');
-        $('.row' + (i + 1)).css({ 'grid-row': (i + 1) });
-        $('.col' + (i + 1)).css({ 'grid-column': (i + 1) });
-        $('.row' + (i + 1)).css({ 'background': i % 2 === 0 ? '#d5d5d5' : '#f2f2f2' });
-        let bottom = 0;
-        for(let j = 0; j < test[key].length; j++) {
-          $.keyframe.define([{ 'name': 'barAnim' + (i + 1) + (j + 1), '0%': { 'height': 0 }, '100%': { 'height': 100 } }]);
-          $('.col' + (i + 1)).append('<div class="bar bar' + (i + 1) + (j + 1) + '"><span class="percent">' + test[key][j].val + '</span></div>');
-          $('.bar' + (i + 1) + (j + 1)).css({ 'height': (test[key][j].val / max * 100) + '%' , 'bottom': bottom + '%' });
-          bottom += (test[key][j].val / max * 100);
-          $('.bar' + (i + 1) + (j + 1)).css({ 'animation': 'barAnim' + (i + 1) + (j + 1) + ' 1.5s ease-out', 'background': test[key][j].color });
-          if(test[key].length - j === 1) {
-            $('.bar' + (i + 1) + (j + 1)).css({ 'border-top-right-radius': '10px','border-top-left-radius': '10px' });
-          }
-        }
-      }
-      $('.col').css({ 'grid-row': '1/' + (Object.keys(data).length + 1) });
-      $('.row').css({ 'grid-column': '1/' + (Object.keys(data).length + 1) });
-      $('.chart').css({ 'grid-auto-rows': 'minmax(' + options.height + ', auto)' });
-      $('.title').css({ 'color': options.titleColor, 'font-size': options.titleFontSize });
-      $('.bar').css({ 'width': (100 - options.barSpacing) + '%', 'left': (options.barSpacing / 2) + '%'});
-      $('.percent').css({ 'color': options.labelColor, 'bottom': options.labelPosition === 'top' ? '85%' : options.labelPosition === 'centre' ? '45%' : '10%' });
-      $('.percent').css({ 'left': ((100 - options.barSpacing) / 2 + 10) + '%' });
-      $("head").append($('<style>.bar::after {position: absolute;top: 0;left: 0;right: 0;bottom: 0;content: "";background-size: 100%;background-image: linear-gradient(25deg, #fff 25%,rgba(0, 0, 0, 0) 25%,rgba(0, 0, 0, 0) 50%,#fff 50%,#fff 75%,rgba(0, 0, 0, 0));background-size: 200% 50%;opacity: 0.2;animation: barInner 2s infinite linear;}</style>'));
-      $.keyframe.define([{ 'name': 'barInner', '0%': { 'background-position': '0 100%' }, '100%': { 'background-position-y': '30px 0%' } }]);
-      Object.keys(chartStyles).map(x => {
-        $(x).css(chartStyles[x]);
-      });
-      Object.keys(data).map(x => {
-        console.log(x);
-      });
+      // Set total amount of bars
+      const barAmount = Object.keys(data).length;
+      // Get max value received
+      let maxValue = getMaxValue(data);
+      // Assign values to Y axis based upon total amount of bars
+      let yValues = getYValues(Object.keys(data).length);
+      // Set grid of bars and labels
+      setGrid(barAmount);
+      // Create the chart including: yValues, xValues and bars
+      createChart(data, barAmount, yValues, maxValue);
+      // Set options to the created Chart
+      setOptions(barAmount, options);
+      // Include animation "barber-shop" like
+      animateInnerBar();
+      // Apply all static CSS to dynamic HTML using object of Styles (chartStyles)
+      Object.keys(chartStyles).map(x => $(x).css(chartStyles[x]));
     }
 
     function setMainLayout(holder, title) {
@@ -94,10 +70,60 @@
       let max = 0;
       Object.keys(obj).map(key => {
         let sum = 0;
-        for(let o of obj[key]) sum += o.val;
+        for (let o of obj[key]) sum += o.val;
         max = sum > max ? sum : max
       });
       return max;
+    }
+
+    function getYValues(arrLength) {
+      let yValues = [...Array(arrLength).fill(0)];
+      yValues = yValues.map((x, ix) => (100 / yValues.length * (yValues.length - ix)).toFixed(0));
+      return yValues;
+    }
+
+    function setGrid(barAmount) {
+      $('.chart').css({ 'grid-template-columns': 'repeat(' + barAmount + ', 1fr)' });
+      $('.labels').css({ 'grid-template-columns': 'repeat(' + barAmount + ', 1fr)' });
+    }
+
+    function createChart(data, barAmount, yValues, max) {
+      for (let i = 0; i < barAmount; i++) {
+        let key = Object.keys(data)[i];
+        $('.yAxis').append('<div class="yAx y">' + yValues[i] + '%</div>');
+        $('.chart').append('<div class="row row' + (i + 1) + '"></div>');
+        $('.chart').append('<div class="col col' + (i + 1) + '"></div>');
+        $('.labels').append('<div class="label l' + (i + 1) + '">' + key + '</div>');
+        $('.row' + (i + 1)).css({ 'grid-row': (i + 1) });
+        $('.col' + (i + 1)).css({ 'grid-column': (i + 1) });
+        $('.row' + (i + 1)).css({ 'background': i % 2 === 0 ? '#d5d5d5' : '#f2f2f2' });
+        let bottom = 0;
+        for (let j = 0; j < data[key].length; j++) {
+          $.keyframe.define([{ 'name': 'barAnim' + (i + 1) + (j + 1), '0%': { 'height': 0 }, '100%': { 'height': 100 } }]);
+          $('.col' + (i + 1)).append('<div class="bar bar' + (i + 1) + (j + 1) + '"><span class="percent">' + data[key][j].val + '</span></div>');
+          $('.bar' + (i + 1) + (j + 1)).css({ 'height': (data[key][j].val / max * 100) + '%', 'bottom': bottom + '%' });
+          bottom += (data[key][j].val / max * 100);
+          $('.bar' + (i + 1) + (j + 1)).css({ 'animation': 'barAnim' + (i + 1) + (j + 1) + ' 1.5s ease-out', 'background': data[key][j].color });
+          if (data[key].length - j === 1) {
+            $('.bar' + (i + 1) + (j + 1)).css({ 'border-top-right-radius': '10px', 'border-top-left-radius': '10px' });
+          }
+        }
+      }
+    }
+
+    function setOptions(barAmount, options) {
+      $('.col').css({ 'grid-row': '1/' + (barAmount + 1) });
+      $('.row').css({ 'grid-column': '1/' + (barAmount + 1) });
+      $('.chart').css({ 'grid-auto-rows': 'minmax(' + options.height + ', auto)' });
+      $('.title').css({ 'color': options.titleColor, 'font-size': options.titleFontSize });
+      $('.bar').css({ 'width': (100 - options.barSpacing) + '%', 'left': (options.barSpacing / 2) + '%' });
+      $('.percent').css({ 'color': options.labelColor, 'bottom': options.labelPosition === 'top' ? '85%' : options.labelPosition === 'centre' ? '45%' : '10%' });
+      $('.percent').css({ 'left': ((100 - options.barSpacing) / 2 + 10) + '%' });
+    }
+
+    function animateInnerBar() {
+      $("head").append($('<style>.bar::after {position: absolute;top: 0;left: 0;right: 0;bottom: 0;content: "";background-size: 100%;background-image: linear-gradient(25deg, #fff 25%,rgba(0, 0, 0, 0) 25%,rgba(0, 0, 0, 0) 50%,#fff 50%,#fff 75%,rgba(0, 0, 0, 0));background-size: 200% 50%;opacity: 0.2;animation: barInner 2s infinite linear;}</style>'));
+      $.keyframe.define([{ 'name': 'barInner', '0%': { 'background-position': '0 100%' }, '100%': { 'background-position-y': '30px 0%' } }]);
     }
 
     const chartStyles = {
