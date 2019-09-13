@@ -65,16 +65,16 @@
     }
 
     .row {
-      background: #eee;
+      background: #ccc;
       /* padding: 1em; */
     }
 
     .row:nth-child(odd) {
-      background: #111;
+      background: #eee;
     }
 
     .row {
-      border-bottom: #000 1px solid;
+      border-bottom: #999 1px solid;
       grid-column: 1/6;
     }
     .row1 {
@@ -101,6 +101,7 @@
     }
     .col1 {
       grid-column: 1;
+      display: inline;
     }
     .col2 {
       grid-column: 2;
@@ -116,18 +117,18 @@
     }
     .bar {
       position: absolute;
-      background: blue;
+      /* background: blue; */
       /* border: #000 1px solid; */
       bottom: 0;
-      width: 50%;
-      left: 25%;
+      width: 40%;
+      left: 30%;
       text-align: center;
       animation: barAnimation 1.5s ease-out;
       border-top-right-radius: 5px;
       border-top-left-radius: 5px;
       /* background-color: #f56982; */
       /* background-size: 100%; */
-      background-image: linear-gradient(to left, #f2395a, #b90c2b);
+
       /* box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25), 0 1px rgba(175, 13, 13, 0.8); */
 
 
@@ -150,8 +151,14 @@
       opacity: 0.15;
       animation: barInner 2s infinite linear;
     }
-    .bar1 {
-      height: 100%;
+    .bar11 {
+      background: #7d2;
+      height: 20%;
+    }
+    .bar12 {
+      background: #987;
+      height: 80%;
+      bottom: 20%;
     }
     .bar2 {
       height: 50%;
@@ -171,6 +178,7 @@
       color: white;;
       bottom: 45%;
       left: 30%;
+      font-weight: bold;
     }
     @keyframes barAnimation {
       0% {
@@ -208,7 +216,8 @@
       <div class="row row4"></div>
       <div class="row row5"></div>
       <div class="col col1">
-        <div class="bar bar1"><span class="percent">100%</span></div>
+        <div class="bar bar11"><span class="percent">20%</span></div>
+        <div class="bar bar12"><span class="percent">80%</span></div>
       </div>
       <div class="col col2">
         <div class="bar bar2"><span class="percent">50%</span></div>
