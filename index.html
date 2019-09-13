@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,104 +8,132 @@
   <title>Bar Chart</title>
   <!-- jQuery CDN -->
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
-  <style>
-
-  </style>
+  <script src="./scripts/jquery.keyframes.min.js"></script>
 </head>
 
 <body>
   <div id="container"></div>
   <script>
-
+    const test = {
+      //HTML: 200,
+      JavaScript: 80,
+      CSS: 45,
+      "React": 66,
+      'C#': 63,
+      //MONGO: 74,
+      FIREBASE: 33,
+      SQL: 95,
+    }
     $(function () {
       let config = {
-        title: 'This is my Chart Title',
+        title: 'The most awesome technologies',
+        titleColor: 'blue',
+        titleFontSize: '25pt',
         width: '100%',
         height: '80px',
-        titleColor: 'red',
-        titleFontSize: '25pt',
-        barColor: 'green',
+        barColor: 'purple',
         barSpacing: '10px',
         labelColor: 'white',
         labelPosition: 'bottom',
       }
-      drawBarChart(test, config, '#container')
+      drawBarChart(test, config, '#container');
+      //var supportedFlag = $;
+      //alert(supportedFlag)
     });
 
     function drawBarChart(data, options, element) {
-      $(element).append(layout);
+      setMainLayout(element, options.title);
+      let max = getMaxValue(data);
+      let yValues = [...Array(Object.keys(data).length).fill(0)];
+      yValues = yValues.map((x, ix) => (100 / yValues.length * (yValues.length - ix)).toFixed(0))
 
-      $('.chart').css({'grid-template-columns': 'repeat(' + Object.keys(data).length + ', 1fr)'});
-      $('.labels').css({'grid-template-columns': 'repeat(' + Object.keys(data).length + ', 1fr)'});
+      $('.chart').css({ 'grid-template-columns': 'repeat(' + Object.keys(data).length + ', 1fr)' });
+      $('.labels').css({ 'grid-template-columns': 'repeat(' + Object.keys(data).length + ', 1fr)' });
 
-      for(let i=0; i < Object.keys(data).length; i++) {
+
+      for (let i = 0; i < Object.keys(data).length; i++) {
         let key = Object.keys(data)[i];
-        $('.yAxis').append('<div class="yAx y">Data' + (i + 1) + '</div>');
+        $('.yAxis').append('<div class="yAx y">' + yValues[i] + '%</div>');
         $('.chart').append('<div class="row row' + (i + 1) + '"></div>');
-        $('.chart').append('<div class="col col' + (i + 1) + '"><div class="bar bar' + (i + 1) + '"><span class="percent">' + test[key] + '%</span></div></div>');
+        $('.chart').append('<div class="col col' + (i + 1) + '"><div class="bar bar' + (i + 1) + '"><span class="percent">' + test[key] + '</span></div></div>');
         $('.labels').append('<div class="label l' + (i + 1) + '">' + key + '</div>');
-        $('.row' + (i + 1)).css({'grid-row': (i + 1)});
-        $('.col' + (i + 1)).css({'grid-column': (i + 1)});
-        $('.bar' + (i + 1)).css({'height': data[key] + '%'});
+        $('.row' + (i + 1)).css({ 'grid-row': (i + 1) });
+        $('.col' + (i + 1)).css({ 'grid-column': (i + 1) });
+        $('.bar' + (i + 1)).css({ 'height': (test[key] / max * 100) + '%' });
+        $.keyframe.define([{ 'name': 'barAnim' + (i + 1), '0%': { 'height': 0 }, '100%': { 'height': 100 } }]);
+        $('.bar' + (i + 1)).css({ 'animation': 'barAnim' + (i + 1) + ' 1.5s ease-out' });
       }
-      $('.col').css({'grid-row': '1/' + (Object.keys(data).length + 1)});
-      $('.row').css({'grid-column': '1/' + (Object.keys(data).length + 1)});
-      $('.chart').css({'grid-auto-rows': 'minmax(' + options.height + ', auto)'});
-      $('.title').css({'color': options.titleColor, 'font-size': options.titleFontSize});
-      $('.bar').css({'background': options.barColor});
-      $('.percent').css({'color': options.labelColor, 'bottom': options.labelPosition === 'top' ? '85%' : options.labelPosition === 'centre' ? '45%' : '10%'});
+      $('.col').css({ 'grid-row': '1/' + (Object.keys(data).length + 1) });
+      $('.row').css({ 'grid-column': '1/' + (Object.keys(data).length + 1) });
+      $('.chart').css({ 'grid-auto-rows': 'minmax(' + options.height + ', auto)' });
+      $('.title').css({ 'color': options.titleColor, 'font-size': options.titleFontSize });
+      //$('.bar').css({ 'background': options.barColor });
+      $('.bar').css({ 'background-image': 'linear-gradient(to left, ' + options.barColor + ', ' + (options.barColor) + ')' });
+      // background-image: linear-gradient(to left, #f2395a, #b90c2b);
+      $('.percent').css({ 'color': options.labelColor, 'bottom': options.labelPosition === 'top' ? '85%' : options.labelPosition === 'centre' ? '45%' : '10%' });
+      $("head").append($('<style>.bar::after {position: absolute;top: 0;left: 0;right: 0;bottom: 0;content: "";background-size: 100%;background-image: linear-gradient(25deg, #fff 25%,rgba(0, 0, 0, 0) 25%,rgba(0, 0, 0, 0) 50%,#fff 50%,#fff 75%,rgba(0, 0, 0, 0));background-size: 200% 50%;opacity: 0.15;animation: barInner 2s infinite linear;}</style>'));
+      $.keyframe.define([{ 'name': 'barInner', '0%': { 'background-position': '0 100%' }, '100%': { 'background-position-y': '30px 0%' } }]);
 
       Object.keys(chartStyles).map(x => {
-        let selector = x.split('_')[0];
-        selector = selector === 'class' ? '.' : selector === 'id' ? '#' : selector === 'all' ? '*' : '';
-        $(selector + x.split('_')[1]).css(chartStyles[x]);
+        // let selector = x.split('_')[0];
+        // selector = selector === 'class' ? '.' : selector === 'id' ? '#' : selector === 'all' ? '*' : '';
+        // $(selector + x.split('_')[1]).css(chartStyles[x]);
+        $(x).css(chartStyles[x]);
       });
 
       Object.keys(data).map(x => {
         console.log(x);
       });
+      // $('.bar').toggleClass('changed');
     }
 
-    const test = {
-      HTML: 100,
-      //JavaScript: 80,
-      CSS: 45,
-      "React": 66,
-      'C#': 63,
-      MONGO: 74,
-      FIREBASE: 33,
-      SQL: 15
+
+    function setMainLayout(holder, title) {
+      const layout = '<div class="wrapper"><div class="title">' + (title || "Bar Chart") + '</div><div class="yAxis"></div><div class="chart"></div><div class="labels"></div></div>';
+      $(holder).append(layout);
     }
-    var layout = '<div class="wrapper"><div class="title">' + 'options.title' + '</div><div class="yAxis"></div><div class="chart"></div><div class="labels"></div></div>';
+    function getMaxValue(obj) {
+      let max = 0;
+      Object.keys(obj).map(key => {
+        max = obj[key] > max ? obj[key] : max
+      });
+      return max;
+    }
+
     var yAxis = '<div class="yAx y">Data</div>';
     var row = '<div class="row row1"></div>';
     const chartStyles = {
-      'all_': {
-        'margin': '0 0 0 0',
+      '*': {
+        'margin': '10 8px 0 0',
         'font-family': "'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif"
       },
-      'class_wrapper': {
+      '.wrapper': {
         'display': 'grid',
-        'grid-template-columns': '1fr 6fr'
+        'grid-template-columns': '1fr 10fr'
       },
-      'class_title': {
-        'margin': '20px 0 20px 0',
+      '.title': {
+        'margin': '40px 0 40px 0',
         'grid-column': '1/3',
         'grid-row': 1,
         //'border': '#000 1px solid',
         'text-align': 'center'
       },
-      'class_yAxis': {
-        'border': '#000 1px solid',
+      '.yAxis': {
+        //'border': '#000 1px solid',
         'grid-column': '1/2',
         'grid-row': 2,
-        'display': 'grid'
+        'display': 'grid',
+        'width': 'auto'
+
       },
-      'class_yAx': {
-        'border': '#000 1px solid',
-        'text-align': 'center'
+      '.yAx': {
+        //'border': '#000 1px solid',
+        //'text-align': 'center'
+        'text-align': 'right',
+        'margin-top': '-10px',
+        'margin-right': '15px'
       },
-      'class_chart': {
+      '.chart': {
         'grid-column': '2/3',
         'grid-row': 2,
         'display': 'grid',
@@ -114,50 +141,66 @@
         //'grid-auto-rows': 'minmax(100px, auto)',
         //'grid-gap': '1em'
       },
-      'class_labels': {
-        'border': '#000 1px solid',
+      '.labels': {
+        //'border': '#000 1px solid',
         'height': '50px',
         'grid-column': '2/3',
         'grid-row': 3,
         'display': 'grid',
         //'grid-template-columns': 'repeat(5, 1fr)'
       },
-      'class_label': {
+      '.label': {
         //'background': 'yellow',
         //'border': '#000 1px solid',
+        'margin-top': '10px',
         'text-align': 'center'
       },
-      'class_chart div': {
-        //'background': '#eee'
+      '.chart .row': {
+        'background': '#eee'
       },
-      'class_chart div:nth-child(odd)': {
-        //'background': '#ddd'
+      '.chart .row:nth-child(odd)': {
+        'background': '#ddd'
       },
-      'class_row': {
-        'border-bottom': '#000 1px solid',
+      '.row': {
+        'border-bottom': '#AAA 1px solid',
+        'border-top': '#000 1px solid',
         //'grid-column': '1/6'
       },
-      'class_col': {
+      '.col': {
         'position': 'relative',
         //'border': '1px solid #000',
         //'grid-row': '1/7'
 
       },
-      'class_bar': {
+      '.bar': {
         'position': 'absolute',
-        //'background': 'blue',
-        'border': '#000 1px solid',
+        //'border': '#000 1px solid',
         'bottom': 0,
         'width': '50%',
         'left': '25%',
-        'text-align': 'center'
+        'text-align': 'center',
+        'border-top-right-radius': '10px',
+        'border-top-left-radius': '10px',
       },
-      'class_percent': {
+      '.changed::after': {
+        'position': 'absolute',
+        'top': '0',
+        'left': '0',
+        'right': '0',
+        'bottom': '0',
+        'content': '',
+        'background-size': '100%',
+        'background-image': 'linear-gradient(25deg, #fff 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 50%, #fff 50%, #fff 75%, rgba(0, 0, 0, 0))',
+        'background-size': '200% 50%',
+        'opacity': '0.15',
+        //'animation': 'barInner 2s infinite linear',
+      },
+      '.percent': {
         'position': 'absolute',
         'display': 'inline-block',
         //'color': 'red',
         //'bottom': '45%',
-        'left': '15%'
+        'left': '25%'
       }
     };
   </script>

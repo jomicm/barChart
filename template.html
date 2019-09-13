@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
   <style>
     * {
       margin: 0 0 0 0;
@@ -13,7 +15,7 @@
     }
     .wrapper {
       display: grid;
-      grid-template-columns: 1fr 6fr;
+      grid-template-columns: 1fr 16fr;
       width: 800px;
       height: 90px;
     }
@@ -26,14 +28,18 @@
       font-size: 35pt;
     }
     .yAxis {
-      border: #000 1px solid;
+      /* border: #000 1px solid; */
       grid-column: 1/2;
       grid-row: 2;
       display: grid;
+      /* width: 20px; */
+      /* margin-left: 0%; */
     }
     .yAx {
-      border: #000 1px solid;
-      text-align: center;
+      /* border: #000 1px solid; */
+      text-align: right;
+      margin-top: -10px;
+      margin-right: 10px;
     }
     .chart {
       grid-column: 2/3;
@@ -44,7 +50,8 @@
       /* grid-gap: 1em; */
     }
     .labels{
-      border: #000 1px solid;
+      /* border: #000 1px solid; */
+      margin-top: 10px;
       height: 50px;
       grid-column: 2/3;
       grid-row: 3;
@@ -57,13 +64,13 @@
       text-align: center;
     }
 
-    .chart div {
-      /* background: #eee; */
+    .row {
+      background: #eee;
       /* padding: 1em; */
     }
 
-    .chart div:nth-child(odd) {
-      /* background: #ddd; */
+    .row:nth-child(odd) {
+      background: #111;
     }
 
     .row {
@@ -110,14 +117,41 @@
     .bar {
       position: absolute;
       background: blue;
-      border: #000 1px solid;
+      /* border: #000 1px solid; */
       bottom: 0;
       width: 50%;
       left: 25%;
-      text-align: center
+      text-align: center;
+      animation: barAnimation 1.5s ease-out;
+      border-top-right-radius: 5px;
+      border-top-left-radius: 5px;
+      /* background-color: #f56982; */
+      /* background-size: 100%; */
+      background-image: linear-gradient(to left, #f2395a, #b90c2b);
+      /* box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25), 0 1px rgba(175, 13, 13, 0.8); */
+
+
+    }
+    .changed::after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      content: "";
+      background-size: 100%;
+      background-image: linear-gradient(25deg, #fff 25%,
+                                        rgba(0, 0, 0, 0) 25%,
+                                        rgba(0, 0, 0, 0) 50%,
+                                        #fff 50%,
+                                        #fff 75%,
+                                        rgba(0, 0, 0, 0));
+      background-size: 200% 50%;
+      opacity: 0.15;
+      animation: barInner 2s infinite linear;
     }
     .bar1 {
-      height: 25%;
+      height: 100%;
     }
     .bar2 {
       height: 50%;
@@ -134,9 +168,25 @@
     .percent {
       position: absolute;
       display: inline-block;
-      color: red;
+      color: white;;
       bottom: 45%;
       left: 30%;
+    }
+    @keyframes barAnimation {
+      0% {
+        height: 0%;
+      }
+      100% {
+        height: 100%;
+      }
+    }
+    @keyframes barInner {
+      0% {
+        background-position: 0 100%;
+      }
+      100% {
+        background-position-y: 30px 0%;
+      }
     }
   </style>
 </head>
@@ -158,7 +208,7 @@
       <div class="row row4"></div>
       <div class="row row5"></div>
       <div class="col col1">
-        <div class="bar bar1"><span class="percent">25%</span></div>
+        <div class="bar bar1"><span class="percent">100%</span></div>
       </div>
       <div class="col col2">
         <div class="bar bar2"><span class="percent">50%</span></div>
@@ -182,7 +232,13 @@
     </div>
   </div>
 
+  <script>
+    $(function () {
+      //alert('ready!')
+      $('.bar').toggleClass('changed');
+    });
 
+  </script>
 </body>
 
 </html>

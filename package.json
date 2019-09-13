@@ -19,5 +19,8 @@
   "devDependencies": {
     "eslint": "^6.3.0",
     "eslint-config-google": "^0.14.0"
+  },
+  "dependencies": {
+    "@keyframes/core": "^2.0.1"
   }
 }
