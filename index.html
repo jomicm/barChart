@@ -14,21 +14,49 @@
     h1, h2 {
       text-align: center;
     }
-    #container1 {
-      widows: 200px;
+    body {
+      text-align: center;
+    }
+    .container {
+      display: inline-block;
     }
   </style>
 </head>
 
 <body>
   <h1>Let's show some Bar Chart examples</h1>
-  <h2>Container 1</h2>
-  <div id="container1"></div>
-  <h2>Container 2</h2>
-  <div id="container2"></div>
-  <h2>Container 3</h2>
-  <div id="container3"></div>
+  <br>
+  <h2>Example 0</h2>
+  <div id="container0" class="container"></div>
+  <br>
+  <h2>Example 1</h2>
+  <div id="container1" class="container"></div>
+  <br>
+  <h2>Example 2</h2>
+  <div id="container2" class="container"></div>
+  <br>
+  <h2>Example 3</h2>
+  <div id="container3" class="container"></div>
   <script>
+    const test0 = {
+      'Sweden': [{val: 6.4, color: 'crimson'},{val: 5.3, color: 'orangered'},{val: 5.1, color: 'gold'},{val: 5.5, color: 'springgreen'},{val: 5.5, color: 'navy'},{val: 4.7, color: 'dodgerblue'},{val: 6.1, color: 'blueviolet'}],
+      'Finland': [{val: 5.1, color: 'crimson'},{val: 5.5, color: 'orangered'},{val: 5.1, color: 'gold'},{val: 5.1, color: 'springgreen'},{val: 5.3, color: 'navy'},{val: 5.0, color: 'dodgerblue'},{val: 6.1, color: 'blueviolet'}],
+      'Germany': [{val: 4.7, color: 'crimson'},{val: 5.2, color: 'orangered'},{val: 5.1, color: 'gold'},{val: 5.3, color: 'springgreen'},{val: 5.9, color: 'navy'},{val: 6.0, color: 'dodgerblue'},{val: 6.1, color: 'blueviolet'}],
+      'France': [{val: 5.0, color: 'crimson'},{val: 5.6, color: 'orangered'},{val: 5.2, color: 'gold'},{val: 5.3, color: 'springgreen'},{val: 5.2, color: 'navy'},{val: 5.5, color: 'dodgerblue'},{val: 4.9, color: 'blueviolet'}],
+      'UK': [{val: 5.4, color: 'crimson'},{val: 5.3, color: 'orangered'},{val: 5.4, color: 'gold'},{val: 5.3, color: 'springgreen'},{val: 5.6, color: 'navy'},{val: 5.6, color: 'dodgerblue'},{val: 4.9, color: 'blueviolet'}],
+      'Denmark': [{val: 6.4, color: 'crimson'},{val: 4.8, color: 'orangered'},{val: 5.3, color: 'gold'},{val: 5.3, color: 'springgreen'},{val: 5.4, color: 'navy'},{val: 6.6, color: 'dodgerblue'},{val: 4.8, color: 'blueviolet'}],
+    };
+    const config0 = {
+      title: 'Commitment Development Index 2018',
+      titleColor: 'midnightblue',
+      titleFontSize: '35pt',
+      width: '650px',
+      height: '70px',
+      barSpacing: '30',
+      labelColor: 'white',
+      labelPosition: 'centre',
+      indicators: [{ name: 'Aid', color: 'white', background: 'crimson' }, { name: 'Finance', color: 'white', background: 'orangered' }, { name: 'Technology', color: 'black', background: 'gold' }, { name: 'Environment', color: 'black', background: 'springgreen' }, { name: 'Trade', color: 'white', background: 'navy' }, { name: 'Security', color: 'white', background: 'dodgerblue' }, { name: 'Migration', color: 'white', background: 'blueviolet' }],
+    };
     const test1 = {
       'Go': [{ val: 15.0, color: 'red' }],
       'Javascript': [{ val: 17.8, color: 'brown' }],
@@ -37,14 +65,14 @@
       'TypeScript': [{ val: 14.6, color: 'green ' }],
     };
     const config1 = {
-      title: 'Top 5 most wanted languages (%)',
+      title: 'Top 5 most wanted programming languages (%)',
       titleColor: 'orange',
       titleFontSize: '25pt',
-      width: '25%',
+      width: '550px',
       height: '40px',
-      barSpacing: '45',
+      barSpacing: '20',
       labelColor: 'white',
-      labelPosition: 'centre',
+      labelPosition: 'top',
     };
     const test2 = {
       'Q1': [{val: 42, color: 'red'},{val: 48, color: 'purple'},{val: 46, color: 'blue'},{val: 32, color: 'orange'}],
@@ -54,9 +82,9 @@
     };
     const config2 = {
       title: 'Quaterly Sales 2018 (K)',
-      titleColor: 'blue',
+      titleColor: 'forestgreen',
       titleFontSize: '30pt',
-      width: '25%',
+      width: '500px',
       height: '100px',
       barSpacing: '60',
       labelColor: 'white',
@@ -64,25 +92,25 @@
       indicators: [{ name: 'East', color: 'white', background: 'red' }, { name: 'West', color: 'white', background: 'purple' }, { name: 'North', color: 'white', background: 'blue' }, { name: 'South', color: 'white', background: 'orange' }],
     };
     const test3 = {
-      'Canada': [{ val: 36, color: 'red' }],
-      'USA': [{ val: 322, color: 'blue' }],
-      'Colombia': [{ val: 49, color: 'brown' }],
-      'Brazil': [{ val: 204, color: 'orange' }],
+      'Canada': [{ val: 36, color: 'salmon' }],
+      'USA': [{ val: 322, color: 'deepskyblue' }],
+      'Colombia': [{ val: 49, color: 'cyan' }],
+      'Brazil': [{ val: 204, color: 'palegoldenrod' }],
       'Argentina': [{ val: 44, color: 'lightblue' }],
-      'Mexico': [{ val: 122, color: 'green' }],
+      'Mexico': [{ val: 122, color: 'springgreen' }],
     };
     const config3 = {
       title: 'Population in the Americas (millions)',
-      titleColor: 'brown',
-      titleFontSize: '20pt',
-      width: '100%',
+      titleColor: 'maroon',
+      titleFontSize: '25pt',
+      width: '1000px',
       height: '60px',
-      barSpacing: '30',
-      labelColor: 'white',
-      labelPosition: 'centre',
+      barSpacing: '10',
+      labelColor: 'black',
+      labelPosition: 'bottom',
     };
     $(function () {
-
+      drawBarChart(test0, config0, '#container0');
       drawBarChart(test1, config1, '#container1');
       drawBarChart(test2, config2, '#container2');
       drawBarChart(test3, config3, '#container3');
