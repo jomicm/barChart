@@ -184,6 +184,34 @@
       left: 30%;
       font-weight: bold;
     }
+    .indicators {
+      display: flexbox;
+      font-size: 12pt;
+      color: white;
+      width: 100%;
+      margin: 15px 0 15px 0;
+    }
+    .ind1 {
+      display: inline;
+      padding: 5px;
+      background: red;
+      color: #fff;
+      border-radius: 10px;
+    }
+    .ind2 {
+      display: inline;
+      padding: 5px;
+      background: purple;
+      color: #fff;
+      border-radius: 10px;
+    }
+    .ind3 {
+      display: inline;
+      padding: 5px;
+      background: palegreen;
+      color: #000;
+      border-radius: 10px;
+    }
     @keyframes barAnimation {
       0% {
         height: 0%;
@@ -205,7 +233,14 @@
 
 <body>
   <div class="wrapper">
-    <div class="title">Graph Title II</div>
+    <div class="title">
+      <span>Graph Title II</span>
+      <div class="indicators">
+        <div class="ind1">Hola</div>
+        <div class="ind2">Hola2</div>
+        <div class="ind3">Hola3</div>
+      </div>
+    </div>
     <div class="yAxis">
       <div class="yAx y">Q</div>
       <div class="yAx y">W</div>
