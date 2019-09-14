@@ -19,3 +19,9 @@ Don't forget to add the bar-chart.js library.
 
 ### Examples
 
+You can create Single Bar Charts:
+![Image of Single Bar Chart](https://raw.githubusercontent.com/jomicm/barChart/master/images/single-bar.png)
+
+And you can also create Stackable Bar Charts:
+You can create Single Bar Charts:
+![Image of Single Bar Chart](https://raw.githubusercontent.com/jomicm/barChart/master/images/stackable-bar.png)
