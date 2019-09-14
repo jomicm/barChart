@@ -49,8 +49,8 @@ The function should be called once the document is loaded through jQuery.
 
 ### Features list and examples
 
-data - Parameter for Single Chart
-*Each element has an array of 1 sub element*
+data - Parameter for Single Chart. 
+*(Each element has an array of 1 sub element)*
 ```
 data = {
   'Go': [{ val: 15.0, color: 'red' }],
@@ -60,8 +60,8 @@ data = {
   'TypeScript': [{ val: 14.6, color: 'green ' }],
 };
 ```
-data - Parameter for Stackable Chart
-*Each element has an array of 2 or more sub elements*
+data - Parameter for Stackable Chart. 
+*(Each element has an array of 2 or more sub elements)*
 ```
 data = {
   'Q1': [{val: 42, color: 'red'},{val: 48, color: 'purple'},{val: 46, color: 'blue'},{val: 32, color: 'orange'}],
@@ -71,7 +71,7 @@ data = {
 };
 ```
 
-options - Parameter for Single Chart
+options - Parameter for Single Chart.
 ```
 options = {
   title: 'Commitment Development Index 2018', // The title of the Chart
@@ -84,8 +84,8 @@ options = {
   labelPosition: 'centre', // The position of values' labels
 };
 ```
-options - Parameter for Stackable Chart
-*Additionally to the Single Chart example, you can add an element to "options" named "indicators" that contains an array of the labels to be used to give extra information about stackable bar colors and meaning.*
+options - Parameter for Stackable Chart. 
+*(Additionally to the Single Chart example, you can add an element to "options" named "indicators" that contains an array of the labels to be used to give extra information about stackable bar colors and meaning)*
 ```
 indicators: [{ name: 'East', color: 'white', background: 'red' }, { name: 'West', color: 'white', background: 'purple' }, { name: 'North', color: 'white', background: 'blue' }, { name: 'South', color: 'white', background: 'orange' }]
 ```
