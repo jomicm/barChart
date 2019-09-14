@@ -38,7 +38,8 @@
   <h2>Example 3</h2>
   <div id="container3" class="container"></div>
   <script>
-    const test0 = {
+    let obj = {};
+    obj.data0 = {
       'Sweden': [{val: 6.4, color: 'crimson'},{val: 5.3, color: 'orangered'},{val: 5.1, color: 'gold'},{val: 5.5, color: 'springgreen'},{val: 5.5, color: 'navy'},{val: 4.7, color: 'dodgerblue'},{val: 6.1, color: 'blueviolet'}],
       'Finland': [{val: 5.1, color: 'crimson'},{val: 5.5, color: 'orangered'},{val: 5.1, color: 'gold'},{val: 5.1, color: 'springgreen'},{val: 5.3, color: 'navy'},{val: 5.0, color: 'dodgerblue'},{val: 6.1, color: 'blueviolet'}],
       'Germany': [{val: 4.7, color: 'crimson'},{val: 5.2, color: 'orangered'},{val: 5.1, color: 'gold'},{val: 5.3, color: 'springgreen'},{val: 5.9, color: 'navy'},{val: 6.0, color: 'dodgerblue'},{val: 6.1, color: 'blueviolet'}],
@@ -46,7 +47,7 @@
       'UK': [{val: 5.4, color: 'crimson'},{val: 5.3, color: 'orangered'},{val: 5.4, color: 'gold'},{val: 5.3, color: 'springgreen'},{val: 5.6, color: 'navy'},{val: 5.6, color: 'dodgerblue'},{val: 4.9, color: 'blueviolet'}],
       'Denmark': [{val: 6.4, color: 'crimson'},{val: 4.8, color: 'orangered'},{val: 5.3, color: 'gold'},{val: 5.3, color: 'springgreen'},{val: 5.4, color: 'navy'},{val: 6.6, color: 'dodgerblue'},{val: 4.8, color: 'blueviolet'}],
     };
-    const config0 = {
+    obj.options0 = {
       title: 'Commitment Development Index 2018',
       titleColor: 'midnightblue',
       titleFontSize: '35pt',
@@ -57,14 +58,14 @@
       labelPosition: 'centre',
       indicators: [{ name: 'Aid', color: 'white', background: 'crimson' }, { name: 'Finance', color: 'white', background: 'orangered' }, { name: 'Technology', color: 'black', background: 'gold' }, { name: 'Environment', color: 'black', background: 'springgreen' }, { name: 'Trade', color: 'white', background: 'navy' }, { name: 'Security', color: 'white', background: 'dodgerblue' }, { name: 'Migration', color: 'white', background: 'blueviolet' }],
     };
-    const test1 = {
+    obj.data1 = {
       'Go': [{ val: 15.0, color: 'red' }],
       'Javascript': [{ val: 17.8, color: 'brown' }],
       'Kotlin': [{ val: 11.1, color: 'purple' }],
       'Python': [{ val: 25.7, color: 'blue' }],
       'TypeScript': [{ val: 14.6, color: 'green ' }],
     };
-    const config1 = {
+    obj.options1 = {
       title: 'Top 5 most wanted programming languages (%)',
       titleColor: 'orange',
       titleFontSize: '25pt',
@@ -74,13 +75,13 @@
       labelColor: 'white',
       labelPosition: 'top',
     };
-    const test2 = {
+    obj.data2 = {
       'Q1': [{val: 42, color: 'red'},{val: 48, color: 'purple'},{val: 46, color: 'blue'},{val: 32, color: 'orange'}],
       'Q2': [{val: 53, color: 'red'},{val: 62, color: 'purple'},{val: 60, color: 'blue'},{val: 45, color: 'orange'}],
       'Q3': [{val: 47, color: 'red'},{val: 55, color: 'purple'},{val: 58, color: 'blue'},{val: 54, color: 'orange'}],
       'Q4': [{val: 60, color: 'red'},{val: 74, color: 'purple'},{val: 70, color: 'blue'},{val: 46, color: 'orange'}],
     };
-    const config2 = {
+    obj.options2 = {
       title: 'Quaterly Sales 2018 (K)',
       titleColor: 'forestgreen',
       titleFontSize: '30pt',
@@ -91,15 +92,15 @@
       labelPosition: 'centre',
       indicators: [{ name: 'East', color: 'white', background: 'red' }, { name: 'West', color: 'white', background: 'purple' }, { name: 'North', color: 'white', background: 'blue' }, { name: 'South', color: 'white', background: 'orange' }],
     };
-    const test3 = {
+    obj.data3 = {
       'Canada': [{ val: 36, color: 'salmon' }],
       'USA': [{ val: 322, color: 'deepskyblue' }],
       'Colombia': [{ val: 49, color: 'cyan' }],
       'Brazil': [{ val: 204, color: 'palegoldenrod' }],
       'Argentina': [{ val: 44, color: 'lightblue' }],
-      'Mexico': [{ val: 122, color: 'springgreen' }],
+      'Mexico': [{ val: 122, color: 'greenyellow' }],
     };
-    const config3 = {
+    obj.options3 = {
       title: 'Population in the Americas (millions)',
       titleColor: 'maroon',
       titleFontSize: '25pt',
@@ -110,11 +111,9 @@
       labelPosition: 'bottom',
     };
     $(function () {
-      drawBarChart(test0, config0, '#container0');
-      drawBarChart(test1, config1, '#container1');
-      drawBarChart(test2, config2, '#container2');
-      drawBarChart(test3, config3, '#container3');
-
+      for(let i = 0; i < 4; i++) {
+        drawBarChart(obj['data' + i], obj['options' + i], '#container' + i);
+      }
     });
   </script>
 </body>

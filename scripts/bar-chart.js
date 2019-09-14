@@ -55,7 +55,7 @@ function getMaxValue(obj) {
 function getYValues(arrLength, max) {
   let yValues = [...Array(arrLength).fill(0)];
   yValues = yValues.map((x, ix) => {
-    (max / yValues.length * (yValues.length - ix)).toFixed(0);
+    return (max / yValues.length * (yValues.length - ix)).toFixed(0);
   });
   return yValues;
 }
